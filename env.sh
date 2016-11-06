@@ -18,12 +18,8 @@ tar xvfz ${VIRTUALENV}.tar.gz
 # Setup virtualenv
 python ${VIRTUALENV}/virtualenv.py ${ENV_NAME}
 
-#${ENV_NAME}/bin/pip install numpy
 #${ENV_NAME}/bin/pip install -r requirements.txt
-${ENV_NAME}/bin/pip install bdflib
-
-# Link if installed opencv3 from homebrew
-# ln -s /usr/local/opt/opencv3/lib/python2.7/site-packages/cv2.so ./opencv/lib/python2.7/site-packages/
+${ENV_NAME}/bin/pip install slackclient
 
 # Cleanup
 rm -rf ${VIRTUALENV} ${VIRTUALENV}.tar.gz
