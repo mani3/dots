@@ -1,14 +1,33 @@
 #!/usr/bin/env python
 # coding:utf-8
 
+import os
 import sys
+import urllib.request
+import tarfile
 import binascii
 from jis import JIS
 from font import BDF
 
+MISAKI_FONT_URL = 'http://www.geocities.jp/littlimi/arc/misaki/misaki_bdf_2012-06-03.tar.gz'
+MISAKI_BDF = 'misaki_gothic.bdf'
+MISAKI_FILE = os.path.basename(MISAKI_FONT_URL)
+
+def download_font(url):
+    if os.path.exists(MISAKI_FILE) is False:
+        res = urllib.request.urlopen(url)
+        with open(os.path.basename(url), 'wb') as f:
+            f.write(res.read())
+    if os.path.exists(MISAKI_BDF) is False:
+        tar = tarfile.open(MISAKI_FILE)
+        tar.extractall()
+        tar.close()
+
 
 def dots(char='', pixel='＠', space='　'):
-    filename = 'misaki_gothic.bdf'
+    download_font(MISAKI_FONT_URL)
+
+    filename = MISAKI_BDF
     bdf = None
     jis = JIS()
 
