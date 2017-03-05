@@ -2,6 +2,7 @@
 # coding:utf-8
 
 import time
+import re
 from slackclient import SlackClient
 from dots import dots
 
@@ -44,14 +45,15 @@ def main():
                 text = message.get('text')
                 channel = message.get('channel')
                 if text is not None:
-                    row = text.rstrip().split(' ')
                     try:
-                        if row[0] == 'dots':
-                            space = safe(row, 3, ':white_large_square:')
-                            pixel = safe(row, 2, ':black_large_square:')
-                            post(slack, row[1], pixel, space, channel)
-                    except IndexError:
-                        error(slack, channel)
+                        m = re.search(r'『(.*)』', text)
+                        message = m.group(1)
+                        emojis = re.findall('\:\w+?\:', text)
+                        pixel = safe(emojis, 0, ':black:')
+                        space = safe(emojis, 1, ':white:')
+                        post(slack, message, pixel, space, channel)
+                    except Exception:
+                        pass
             time.sleep(1)
     else:
         print('Connection Failed, invalid token?')

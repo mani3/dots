@@ -27,6 +27,7 @@ def download_font(url):
 def dots(char='', pixel='＠', space='　'):
     download_font(MISAKI_FONT_URL)
 
+    # filename = 'milkjf_k16.bdf'
     filename = MISAKI_BDF
     bdf = None
     jis = JIS()
@@ -41,7 +42,7 @@ def dots(char='', pixel='＠', space='　'):
         bitmap = bdf.bitmap(jis_code)
         dots = ''
         for b in bitmap:
-            line = bin(int(b, 16))[2:].zfill(8)
+            line = bin(int(b, 16))[2:].zfill(len(b)*4)
             line = line.replace('0', space)
             line = line.replace('1', pixel)
             dots += line + '\n'
